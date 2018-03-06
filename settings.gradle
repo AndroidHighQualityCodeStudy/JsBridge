@@ -1,1 +1,3 @@
-include ':example', ':library'
+include ':example'
+include ':library'
+

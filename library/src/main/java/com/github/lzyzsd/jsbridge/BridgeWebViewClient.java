@@ -2,6 +2,7 @@ package com.github.lzyzsd.jsbridge;
 
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,6 +15,8 @@ import java.net.URLDecoder;
  * Created by bruce on 10/28/15.
  */
 public class BridgeWebViewClient extends WebViewClient {
+    private static final String TAG = "BridgeWebViewClient";
+
     private BridgeWebView webView;
 
     public BridgeWebViewClient(BridgeWebView webView) {
@@ -22,6 +25,7 @@ public class BridgeWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        LogUtils.d(TAG, "shouldOverrideUrlLoading——>url: " + url);
         try {
             url = URLDecoder.decode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -42,7 +46,7 @@ public class BridgeWebViewClient extends WebViewClient {
     // 增加shouldOverrideUrlLoading在api》=24时
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-
+        LogUtils.d(TAG, "---shouldOverrideUrlLoading---");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             String url = request.getUrl().toString();
             try {
@@ -59,7 +63,7 @@ public class BridgeWebViewClient extends WebViewClient {
             } else {
                 return super.shouldOverrideUrlLoading(view, request);
             }
-        }else {
+        } else {
             return super.shouldOverrideUrlLoading(view, request);
         }
     }
